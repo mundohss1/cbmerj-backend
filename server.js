@@ -12,7 +12,7 @@ const SUPABASE_KEY = process.env.SUPABASE_KEY;
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// Status API
+// Rota padrão para teste
 app.get('/api', (req, res) => {
     res.json({ status: "API CBMERJ Operacional com Supabase", timestamp: new Date() });
 });
@@ -82,7 +82,6 @@ app.get('/api/respostas', async (req, res) => {
     const { data, error } = await supabase.from('respostas').select('*').order('created_at', { ascending: false });
     if (error) return res.status(500).json({ error: error.message });
     
-    // Mapear campos para manter compatibilidade com o frontend
     const formatado = data.map(r => ({
         _id: r.id,
         militarNome: r.militar_nome,
@@ -113,5 +112,5 @@ app.delete('/api/respostas', async (req, res) => {
     res.json({ message: "Histórico limpo." });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => console.log(`🚀 Servidor rodando na porta ${PORT}`));
